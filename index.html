@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D'Lucas Restaurante e Pizzaria</title>
+  <meta name="description" content="A melhor pizzaria e restaurante de Santo Antônio do Descoberto. Rodízio de pizzas, batata, refil de refri e muito mais. Peça já!">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Icons & Animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #E53935; /* Vermelho Pizzaria */
+      --primary-dark: #C62828;
+      --secondary: #FFB300; /* Amarelo Queijo/Detalhes */
+      --bg-dark: #121212;
+      --bg-card: #1E1E1E;
+      --text: #F5F5F5;
+      --text-muted: #BDBDBD;
+      --font-heading: 'Oswald', sans-serif;
+      --font-body: 'Poppins', sans-serif;
+      --radius: 8px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background-color: var(--bg-dark); color: var(--text); overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1px; }
+    a { text-decoration: none; color: inherit; transition: .3s; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all .3s; border: none; font-family: var(--font-body); }
+    .btn-primary { background-color: var(--primary); color: #fff; box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4); }
+    .btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(229, 57, 53, 0.6); }
+    .btn-outline { border: 2px solid var(--secondary); color: var(--secondary); background: transparent; }
+    .btn-outline:hover { background: var(--secondary); color: var(--bg-dark); }
+
+    /* NAVBAR */
+    header { position: fixed; top: 0; width: 100%; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: #fff; letter-spacing: 2px; }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { font-size: 0.95rem; font-weight: 500; text-transform: uppercase; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--secondary); }
+    
+    /* MENU MOBILE */
+    .menu-toggle { display: none; font-size: 1.5rem; color: #fff; cursor: pointer; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-dark); flex-direction: column; text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .nav-links.active { display: flex; }
+      .menu-toggle { display: block; }
+    }
+
+    /* HERO */
+    .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 80px; }
+    .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('img/img2.webp') center/cover; opacity: 0.4; z-index: -2; }
+    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.3) 0%, rgba(18,18,18,1) 100%); z-index: -1; }
+    .hero-content { max-width: 800px; z-index: 1; padding: 0 20px; }
+    .hero-title { font-size: clamp(3rem, 8vw, 5rem); color: #fff; line-height: 1.1; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+    .hero-title span { color: var(--primary); }
+    .hero-subtitle { font-size: clamp(1rem, 3vw, 1.3rem); color: var(--text-muted); margin-bottom: 40px; font-weight: 300; }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* SOBRE & HIGHLIGHTS */
+    .section { padding: 100px 0; }
+    .section-title { text-align: center; font-size: 2.5rem; color: var(--secondary); margin-bottom: 16px; }
+    .section-subtitle { text-align: center; color: var(--text-muted); max-width: 600px; margin: 0 auto 50px; font-size: 1rem; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .about-img { border-radius: var(--radius); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
+    .about-img::after { content:''; position:absolute; inset:0; border: 2px solid var(--secondary); border-radius: var(--radius); transform: translate(15px, 15px); z-index: -1; }
+    .about-text h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
+    .about-text p { color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+    .features { display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap; }
+    .feature { display: flex; align-items: center; gap: 10px; font-weight: 500; background: var(--bg-card); padding: 10px 20px; border-radius: 50px; font-size: 0.9rem; }
+    .feature i { color: var(--primary); font-size: 1.2rem; }
+
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } .about-img::after { display:none; } }
+
+    /* RODÍZIO / CARDÁPIO */
+    .menu-highlight { background: var(--bg-card); padding: 80px 0; border-top: 2px solid var(--primary); border-bottom: 2px solid var(--primary); }
+    .rodizio-card { background: var(--bg-dark); border-radius: var(--radius); overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.6); display: flex; max-width: 900px; margin: 0 auto; }
+    .rodizio-img { flex: 1; min-height: 300px; background: url('img/img3.webp') center/cover; }
+    .rodizio-info { flex: 1; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; }
+    .rodizio-info h3 { font-size: 2.2rem; color: var(--secondary); margin-bottom: 15px; }
+    .rodizio-info p { color: var(--text-muted); margin-bottom: 25px; line-height: 1.7; }
+    .price { font-family: var(--font-heading); font-size: 2.5rem; color: #fff; margin-bottom: 20px; }
+    .price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; font-family: var(--font-body); text-transform: lowercase; }
+    
+    @media (max-width: 768px) { .rodizio-card { flex-direction: column; } .rodizio-info { padding: 30px 20px; } }
+
+    /* AVALIAÇÕES */
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .review-card { background: var(--bg-card); padding: 30px; border-radius: var(--radius); position: relative; border: 1px solid rgba(255,255,255,0.05); }
+    .review-card i.fa-quote-left { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: rgba(255,179,0,0.15); }
+    .stars { color: var(--secondary); margin-bottom: 15px; font-size: 0.9rem; }
+    .review-text { font-style: italic; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; font-size: 0.95rem; }
+    .review-author { font-weight: 600; font-size: 0.9rem; color: #fff; }
+    .rating-badge { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 50px; }
+    .rating-score { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 700; color: var(--secondary); line-height: 1; }
+    .rating-info p { color: var(--text-muted); font-size: 0.9rem; margin-top: 5px; }
+
+    /* GALERIA INSTA-STYLE */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+    .gallery-item { aspect-ratio: 1; overflow: hidden; border-radius: var(--radius); cursor: pointer; position: relative; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .gallery-item:hover img { transform: scale(1.1); }
+    .gallery-item::after { content: '<i class="fa-brands fa-instagram"></i>'; position: absolute; inset: 0; background: rgba(229, 57, 53, 0.8); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2rem; opacity: 0; transition: opacity .3s; font-family: "Font Awesome 6 Free"; font-weight: 900; }
+    .gallery-item:hover::after { opacity: 1; }
+
+    /* FOOTER */
+    footer { background: #0A0A0A; padding: 60px 0 30px; border-top: 1px solid rgba(255,255,255,0.05); }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+    .footer-col h4 { color: var(--secondary); margin-bottom: 20px; font-size: 1.2rem; }
+    .footer-col p, .footer-col a { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; display: block; margin-bottom: 10px; }
+    .footer-col a:hover { color: #fff; }
+    .footer-col i { width: 25px; color: var(--primary); }
+    .social-links { display: flex; gap: 15px; margin-top: 20px; }
+    .social-links a { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: .3s; }
+    .social-links a:hover { background: var(--primary); color: #fff; transform: translateY(-3px); }
+    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); font-size: 0.85rem; }
+
+    /* FLOAT WHATSAPP */
+    .float-wa { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 2rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 1000; animation: bounce 2s infinite; }
+    .float-wa:hover { background: #20BA56; transform: scale(1.1); animation: none; }
+    @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav-container">
+      <a href="#" class="logo">D'Lucas <span>Pizzaria</span></a>
+      <div class="menu-toggle" id="mobile-menu"><i class="fa-solid fa-bars"></i></div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#rodizio">Rodízio</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#avaliacoes">Avaliações</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1 class="hero-title" data-aos="fade-down">A melhor pizza de<br><span>Santo Antônio</span></h1>
+      <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="150">Qualidade premium, rodízio completo e um ambiente feito para a sua família. Aberto hoje até 00:00.</p>
+      <div class="hero-buttons" data-aos="fade-up" data-aos-delay="300">
+        <a href="https://wa.me/556136267000" class="btn btn-primary" target="_blank"><i class="fa-brands fa-whatsapp"></i> Fazer Pedido</a>
+        <a href="#rodizio" class="btn btn-outline"><i class="fa-solid fa-pizza-slice"></i> Conhecer Rodízio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre" class="section">
+    <div class="container about-grid">
+      <div class="about-img" data-aos="fade-right">
+        <img src="img/img1.webp" alt="Pizza D'Lucas">
+      </div>
+      <div class="about-text" data-aos="fade-left">
+        <h3 style="font-family: var(--font-heading); color: var(--secondary); font-size: 1.2rem; margin-bottom: 5px; letter-spacing: 2px;">Tradição e Sabor</h3>
+        <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Restaurante e Pizzaria</h2>
+        <p>Localizados no coração de Santo Antônio do Descoberto, o D'Lucas Restaurante e Pizzaria é o ponto de encontro perfeito para quem ama uma pizza de verdade. Massa no ponto certo, ingredientes selecionados e um atendimento que faz você se sentir em casa.</p>
+        <p>Seja para um jantar romântico, encontro com amigos ou para pedir no conforto do seu lar, nós entregamos a melhor experiência gastronômica da região.</p>
+        
+        <div class="features">
+          <div class="feature"><i class="fa-solid fa-store"></i> Refeição no local</div>
+          <div class="feature"><i class="fa-solid fa-bag-shopping"></i> Para viagem</div>
+          <div class="feature"><i class="fa-solid fa-motorcycle"></i> Delivery Rápido</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODÍZIO DESTAQUE -->
+  <section id="rodizio" class="menu-highlight">
+    <div class="container">
+      <h2 class="section-title" data-aos="zoom-in">O Famoso Rodízio</h2>
+      <p class="section-subtitle" data-aos="fade-up">A experiência completa D'Lucas para quem tem muita fome de coisa boa.</p>
+      
+      <div class="rodizio-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="rodizio-img"></div>
+        <div class="rodizio-info">
+          <h3>Rodízio Completo</h3>
+          <p>Venha aproveitar o nosso rodízio! São dezenas de sabores de pizzas salgadas e doces, acompanhadas daquela batata frita crocante e refil de refrigerante para você beber à vontade.</p>
+          <div class="price">R$ 20–40 <span>/ pessoa (média)</span></div>
+          <a href="https://wa.me/556136267000" class="btn btn-primary" style="align-self: flex-start;" target="_blank"><i class="fa-solid fa-calendar-check"></i> Reservar Mesa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="galeria" class="section">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Nossas Delícias</h2>
+      <p class="section-subtitle" data-aos="fade-up">Dê uma olhada no que espera por você. Imagens reais dos nossos produtos.</p>
+      
+      <div class="gallery-grid">
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="50"><img src="img/img4.webp" alt="Galeria"></div>
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="100"><img src="img/img5.webp" alt="Galeria"></div>
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="150"><img src="img/img6.webp" alt="Galeria"></div>
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="200"><img src="img/img7.webp" alt="Galeria"></div>
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="250"><img src="img/img8.webp" alt="Galeria"></div>
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="300"><img src="img/img9.webp" alt="Galeria"></div>
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="350"><img src="img/img10.webp" alt="Galeria"></div>
+        <div class="gallery-item" data-aos="fade-up" data-aos-delay="400"><img src="img/img11.webp" alt="Galeria"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÕES -->
+  <section id="avaliacoes" class="section" style="background: var(--bg-card); border-top: 1px solid rgba(255,255,255,0.05);">
+    <div class="container">
+      <div class="rating-badge" data-aos="zoom-in">
+        <div class="rating-score">4,1</div>
+        <div class="rating-info">
+          <div class="stars" style="font-size: 1.2rem;">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star-half-stroke"></i>
+          </div>
+          <p>Baseado em 519 avaliações no Google</p>
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+          <i class="fa-solid fa-quote-left"></i>
+          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="review-text">"Fomos ao rodízio 2x gostamos bastante das pizzas, batata e refil de refri!!"</p>
+          <div class="review-author">— Cliente Satisfeito</div>
+        </div>
+        
+        <div class="review-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="fa-solid fa-quote-left"></i>
+          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="review-text">"Muito boa atendido ótimo funcionário bem esclarecido e bons preços."</p>
+          <div class="review-author">— Cliente Satisfeito</div>
+        </div>
+
+        <div class="review-card" data-aos="fade-up" data-aos-delay="300">
+          <i class="fa-solid fa-quote-left"></i>
+          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="review-text">"Ambiente familiar, pizza deliciosa e entrega super rápida. Recomendo muito!"</p>
+          <div class="review-author">— Cliente Satisfeito</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contato">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>D'Lucas Pizzaria</h4>
+          <p>Se identifica como uma empresa de empreendedoras. A melhor experiência em rodízio e delivery da região.</p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/DLucas36267000/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Contato & Horários</h4>
+          <p><i class="fa-solid fa-phone"></i> (61) 3626-7000</p>
+          <p><i class="fa-solid fa-clock"></i> Aberto todos os dias até as 00:00</p>
+          <p><a href="http://www.dlucas.com.br/" target="_blank"><i class="fa-solid fa-globe"></i> dlucas.com.br</a></p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Endereço</h4>
+          <p><i class="fa-solid fa-location-dot"></i> Qd 62 lote 20B centro, QD.5, 62 - 19 - Centro</p>
+          <p>Santo Antônio do Descoberto - GO</p>
+          <p>CEP: 72900-354</p>
+          <a href="https://maps.google.com/?q=D'Lucas+Restaurante+e+Pizzaria+Santo+Antônio+do+Descoberto" target="_blank" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.8rem; margin-top: 15px;"><i class="fa-solid fa-map-location-dot"></i> Ver no Mapa</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 D'Lucas Restaurante e Pizzaria. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/556136267000" class="float-wa" target="_blank">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 800, offset: 50 });
+    
+    // Menu Mobile
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+    
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Fechar menu ao clicar em um link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
